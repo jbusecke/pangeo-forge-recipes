@@ -468,4 +468,4 @@ class StoreToZarr(beam.PTransform, ZarrWriterMixin):
         target_store = schema | PrepareZarrTarget(
             target=self.get_full_target(), target_chunks=target_chunks
         )
-        return rechunked_datasets | StoreDatasetFragments(target_store=target_store)
+        return rechunked_datasets | StoreDatasetFragments(target_store=target_store) | beam.create([target_store])
